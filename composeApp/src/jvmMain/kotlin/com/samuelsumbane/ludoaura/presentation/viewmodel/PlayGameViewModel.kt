@@ -17,37 +17,57 @@ class PlayGameViewModel : ViewModel() {
     fun submit(button: PeaoButton) {
         val buttonData = if (button == PeaoButton.firstButton) playGame.value.firstButton else playGame.value.secondButton
 
+        fun moveFButtonToLeft() = changeFButtonPosition(buttonData.xPosition - jupper, buttonData.yPosition)
+        fun moveFButtonToRight() = changeFButtonPosition(buttonData.xPosition + jupper, buttonData.yPosition)
+        fun moveFButtonDown() = changeFButtonPosition(buttonData.xPosition, buttonData.yPosition + jupper)
+        fun moveFButtonUp() = changeFButtonPosition(buttonData.xPosition, buttonData.yPosition - jupper)
+
+
         when {
-            buttonData.xPosition == 0 -> {
+            buttonData.xPosition == 0 && buttonData.yPosition == 0 -> {
                 changeFButtonPosition(jupper, 0)
                 println("moved to right")
             }
-            buttonData.yPosition < (jupper * 4) -> {
-                //
-                changeFButtonPosition(buttonData.xPosition, buttonData.yPosition + jupper)
+            buttonData.yPosition < jupper * 4 -> {
+                moveFButtonDown()
                 println("moved to down ${buttonData.yPosition} < ${(jupper * 5)}")
 
             }
             buttonData.yPosition == (jupper * 4) && buttonData.xPosition < jupper * 4 -> {
-                //
-                changeFButtonPosition(buttonData.xPosition + jupper, buttonData.yPosition)
+                moveFButtonToRight()
                 println("moved to right ${buttonData.yPosition} == ${(jupper * 4)}")
-
             }
+
             buttonData.xPosition == jupper * 4 && buttonData.yPosition < jupper * 6 -> {
-                changeFButtonPosition(buttonData.xPosition, buttonData.yPosition + jupper)
+                moveFButtonDown()
                 println("moved to down ${buttonData.xPosition} == ${(jupper * 4)}")
             }
-            buttonData.yPosition == jupper * 6 -> {
-                changeFButtonPosition(buttonData.xPosition - jupper, buttonData.yPosition)
-
+            buttonData.yPosition == jupper * 6 && buttonData.xPosition > jupper -> {
+                moveFButtonToLeft()
+                println("moving to left")
             }
+            (buttonData.yPosition == jupper * 6 && buttonData.xPosition == jupper) || buttonData.yPosition < jupper * 9 && buttonData.xPosition == jupper -> {
+                println("moved down again ${buttonData.xPosition} == ${(jupper)}")
+                moveFButtonDown()
+            }
+            buttonData.yPosition == jupper * 9 && buttonData.xPosition > jupper * -1 -> {
+                println("xposition is: ${buttonData.xPosition}")
+                println("move left (3) times ${buttonData.xPosition} < ${(jupper)}")
+                moveFButtonToLeft()
+            }
+
+            buttonData.xPosition == jupper * -1 && buttonData.yPosition > jupper * 6 -> {
+                moveFButtonUp()
+            }
+            (buttonData.xPosition == jupper * -1 && buttonData.yPosition == jupper * 6) || (buttonData.yPosition == jupper * 6 && buttonData.xPosition > jupper * -3) -> {
+                moveFButtonToLeft()
+            }
+
+
         }
     }
 
-    fun nextHouse() {
 
-    }
 
     fun changeFButtonPosition(aditionalXPosition: Int, aditionalYPosition: Int) {
         _playGame.update {

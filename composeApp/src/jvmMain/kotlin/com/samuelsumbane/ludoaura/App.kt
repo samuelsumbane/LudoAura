@@ -64,14 +64,13 @@ fun App() {
                         playGameUiState.firstButton.xPosition.dp,
                         playGameUiState.firstButton.yPosition.dp,
                     ) {
-                            coroutine.launch {
-                                repeat(12) {
-                                    delay(560)
-                                    playGameViewModel.submit(PeaoButton.firstButton)
-
-                                }
-
+                        coroutine.launch {
+                            repeat(23) {
+                                delay(560)
+                                playGameViewModel.submit(PeaoButton.firstButton)
+                                println("runned $it")
                             }
+                        }
                     }
                 }
 
