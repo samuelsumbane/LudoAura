@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -25,6 +26,7 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -142,37 +144,44 @@ fun RetangulusGroup() {
     Box(
         modifier = Modifier
             .background(Color.Red)
-            .size(250.dp, 60.dp)
+            .size(180.dp, 60.dp)
             .onGloballyPositioned { coords ->
-                retanguloHeight = coords.size.height.dp / 3
-                retanguloWidth = coords.size.width.dp / 6
-            }
-        ,
+                //
+                retanguloHeight = (coords.size.height.dp / 3) - 4.dp
+                retanguloWidth = (coords.size.width.dp / 6) - 4.dp
+            },
     ) {
-        Row(
-            modifier = Modifier.fillMaxSize(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            repeat(7) { VerticalDivider(thickness = 2.dp, color = Color.Black) }
-        }
 
-        Row(
-            modifier = Modifier
-                .size(retanguloWidth, retanguloHeight)
-        ) {
-
-        }
 
         Row(
             modifier = Modifier
 //                .size(80.dp, 40.dp)
-                .fillMaxWidth(0.89f)
+                .padding(start = 2.dp, end = 2.dp)
+                .fillMaxWidth(0.83f)
                 .fillMaxHeight(1/3f)
-                .background(Color.Magenta)
+                .background(Color.LightGray)
 //                .align(Alignment.Center)
                 .align(Alignment.CenterEnd)
         ) {
 
+        }
+
+        Row(
+            modifier = Modifier
+                .padding(start = retanguloWidth + 6.dp, top = 2.dp)
+                .size(retanguloWidth, retanguloHeight)
+                .background(Color.Magenta)
+        ) {
+//            Icon(painterR, contentDescription = "star")
+        }
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            repeat(7) {
+                VerticalDivider(
+                    modifier = Modifier.zIndex(98f),
+                    thickness = 2.dp, color = Color.Black) }
         }
 
         Column(
