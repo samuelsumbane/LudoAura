@@ -3,25 +3,34 @@ package com.samuelsumbane.ludoaura
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.VerticalAlignmentLine
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.samuelsumbane.ludoaura.presentation.uistate.PeaoButton
 import com.samuelsumbane.ludoaura.presentation.viewmodel.PlayGameViewModel
@@ -37,49 +46,49 @@ import ludoaura.composeapp.generated.resources.Res
 @Preview
 fun App() {
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        var fXOffSetButton by remember { mutableStateOf(0.dp)}
-        var fYOffSetButton by remember { mutableStateOf(0.dp)}
         val playGameViewModel: PlayGameViewModel = viewModel()
         val playGameUiState by playGameViewModel.playGame.collectAsState()
         val coroutine = rememberCoroutineScope()
 
         Column(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
+//                .background(MaterialTheme.colorScheme.primaryContainer)
                 .safeContentPadding()
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Column(
-                modifier = Modifier
-//                    .size(50.dp)
-                    .background(Color.Green)
-            ) {
-                SpaceAroundRow {
-                    Peao(){
+                PeaoPlace()
+//            Column(
+//                modifier = Modifier
+////                    .size(50.dp)
+//                    .background(Color.Green)
+//            ) {
 
-                    }
-                    Peao(
-                        playGameUiState.firstButton.xPosition.dp,
-                        playGameUiState.firstButton.yPosition.dp,
-                    ) {
-                        coroutine.launch {
-                            repeat(23) {
-                                delay(560)
-                                playGameViewModel.submit(PeaoButton.firstButton)
-                                println("runned $it")
-                            }
-                        }
-                    }
-                }
+
+//                SpaceAroundRow {
+//                    Peao(){
+//
+//                    }
+//                    Peao(
+//                        playGameUiState.firstButton.xPosition.dp,
+//                        playGameUiState.firstButton.yPosition.dp,
+//                    ) {
+//                        coroutine.launch {
+//                            repeat(29) {
+//                                delay(560)
+//                                playGameViewModel.submit(PeaoButton.firstButton)
+//                                println("runned $it")
+//                            }
+//                        }
+//                    }
+//                }
 
 //                SpaceAroundRow {
 //                    Peao({})
 //                    Peao({})
 //                }
 
-            }
+//            }
 
 //            Column() {
 //                Text()
@@ -112,9 +121,69 @@ fun Peao(
     }
 }
 
+@Preview
+@Composable
+fun PeaoPlace() {
+    Column() {
+        Column() {
 
-fun runPeao(
+        }
+        Column {
+            RetangulusGroup()
+        }
+    }
+}
 
-) {
+@Composable
+fun RetangulusGroup() {
+    var retanguloHeight by remember { mutableStateOf(1.dp) }
+    var retanguloWidth by remember { mutableStateOf(1.dp) }
 
+    Box(
+        modifier = Modifier
+            .background(Color.Red)
+            .size(250.dp, 60.dp)
+            .onGloballyPositioned { coords ->
+                retanguloHeight = coords.size.height.dp / 3
+                retanguloWidth = coords.size.width.dp / 6
+            }
+        ,
+    ) {
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            repeat(7) { VerticalDivider(thickness = 2.dp, color = Color.Black) }
+        }
+
+        Row(
+            modifier = Modifier
+                .size(retanguloWidth, retanguloHeight)
+        ) {
+
+        }
+
+        Row(
+            modifier = Modifier
+//                .size(80.dp, 40.dp)
+                .fillMaxWidth(0.89f)
+                .fillMaxHeight(1/3f)
+                .background(Color.Magenta)
+//                .align(Alignment.Center)
+                .align(Alignment.CenterEnd)
+        ) {
+
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .zIndex(99f),
+            verticalArrangement = Arrangement.SpaceBetween
+        ) {
+            repeat(4) { HorizontalDivider(thickness = 2.dp, color = Color.Black) }
+        }
+
+
+    }
 }

@@ -62,7 +62,13 @@ class PlayGameViewModel : ViewModel() {
             (buttonData.xPosition == jupper * -1 && buttonData.yPosition == jupper * 6) || (buttonData.yPosition == jupper * 6 && buttonData.xPosition > jupper * -3) -> {
                 moveFButtonToLeft()
             }
-
+            buttonData.yPosition >= jupper * 3 -> {
+                moveFButtonUp()
+                println("x position is: ${buttonData.xPosition}")
+            }
+            buttonData.yPosition == jupper * 3 && buttonData.xPosition < jupper -> {
+                moveFButtonToLeft()
+            }
 
         }
     }
