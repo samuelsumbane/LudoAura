@@ -42,6 +42,9 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import ludoaura.composeapp.generated.resources.Res
+import ludoaura.composeapp.generated.resources.arrow_right_short
+import ludoaura.composeapp.generated.resources.star
+
 //import ludoaura.composeapp.generated.resources.compose_multiplatform
 
 @Composable
@@ -128,7 +131,13 @@ fun Peao(
 fun PeaoPlace() {
     Column() {
         Column() {
+            Column(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .background(Color.LightGray)
+            ) {
 
+            }
         }
         Column {
             RetangulusGroup()
@@ -159,21 +168,40 @@ fun RetangulusGroup() {
                 .padding(start = 2.dp, end = 2.dp)
                 .fillMaxWidth(0.83f)
                 .fillMaxHeight(1/3f)
-                .background(Color.LightGray)
+                .background(Color.Magenta)
 //                .align(Alignment.Center)
                 .align(Alignment.CenterEnd)
         ) {
+        }
 
+        // Arrow
+        Row(
+            modifier = Modifier
+                .padding(start = 3.dp, top = retanguloHeight + 5.dp)
+                .size(retanguloWidth, retanguloHeight)
+//                .background(Color.Green)
+        ) {
+            Icon(
+                painterResource(Res.drawable.arrow_right_short),
+                contentDescription = "star",
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
         }
 
         Row(
             modifier = Modifier
                 .padding(start = retanguloWidth + 6.dp, top = 2.dp)
                 .size(retanguloWidth, retanguloHeight)
-                .background(Color.Magenta)
+                .background(Color.Magenta),
+            horizontalArrangement = Arrangement.Center
         ) {
-//            Icon(painterR, contentDescription = "star")
+            Icon(
+                painterResource(Res.drawable.star),
+                contentDescription = "star",
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
         }
+
         Row(
             modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.SpaceBetween
