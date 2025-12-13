@@ -13,7 +13,8 @@ fun main() = application {
         state = WindowState(
             size = DpSize(400.dp, 570.dp)
         ),
-        alwaysOnTop = true
+        alwaysOnTop = true,
+        resizable = false
     ) {
         App()
     }
