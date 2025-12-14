@@ -37,8 +37,8 @@ import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.samuelsumbane.ludoaura.presentation.viewmodel.PlayGameViewModel
 import ludoaura.composeapp.generated.resources.Res
-import ludoaura.composeapp.generated.resources.arrow_right_short
-import ludoaura.composeapp.generated.resources.star
+import ludoaura.composeapp.generated.resources.forward_fill
+import ludoaura.composeapp.generated.resources.star_fill
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -57,7 +57,8 @@ fun App() {
             modifier = Modifier
                 .fillMaxSize()
                 .safeContentPadding()
-                .background(Color.DarkGray),
+//                .background(Color.DarkGray),
+            ,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
 
@@ -105,14 +106,6 @@ fun App() {
     }
 }
 
-@Composable
-fun SpaceAroundRow(content: @Composable () -> Unit) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceAround
-    ) {
-        content()
-    }
-}
 
 @Composable
 fun Peao(
@@ -140,7 +133,7 @@ fun PeaoPlace() {
                 .fillMaxSize()
 //                .fillMaxWidth(0.9f)
                 .padding(10.dp)
-                .background(Color.LightGray)
+//                .background(Color.LightGray)
         ) {
             Box(
                 modifier = Modifier.fillMaxSize()
@@ -151,33 +144,27 @@ fun PeaoPlace() {
                         .fillMaxWidth(fItemWidth)
                         .fillMaxHeight(sItemWidth)
                         .align(Alignment.TopStart),
-                    childModifier = Modifier.align(Alignment.BottomCenter)
+                    border = Border.TopStart
                 )
 
                 RetangulusGroup(
                     identifierColor = Color.Yellow,
                     rotationDegrees = 180f,
                     modifier = Modifier
-//                        .weight(1f)
                         .fillMaxWidth(sItemWidth)
                         .fillMaxHeight(fItemWidth)
                         .align(Alignment.TopEnd),
-                    childModifier = Modifier
-                        .fillMaxWidth(0.80f),
+                    border = Border.TopEnd,
                     inRow = true
                 )
 
                 RetangulusGroup(
                     identifierColor = Color.Red,
-//                    rotationDegrees = -90f,
                     modifier = Modifier
                         .fillMaxWidth(sItemWidth)
                         .fillMaxHeight(fItemWidth)
                         .align(Alignment.BottomStart),
-                    childModifier = Modifier
-                        .fillMaxWidth(0.67f)
-//                        .align(Alignment.BottomEnd)
-                    ,
+                    border = Border.BottomEnd,
                     inRow = true
                 )
 
@@ -188,15 +175,9 @@ fun PeaoPlace() {
                         .fillMaxWidth(fItemWidth)
                         .fillMaxHeight(sItemWidth)
                         .align(Alignment.BottomEnd),
-                    childModifier = Modifier
-
+                    border = Border.BottomStart
                 )
             }
-
-
-
-
-
         }
 
 }
@@ -206,7 +187,8 @@ fun RetangulusGroup(
     identifierColor: Color,
     modifier: Modifier = Modifier,
     rotationDegrees: Float = 0f,
-    childModifier: Modifier = Modifier,
+//    childModifier: Modifier = Modifier,
+    border: Border,
     inRow: Boolean = false,
 ) {
     var retanguloHeight by remember { mutableStateOf(1.dp) }
@@ -279,7 +261,7 @@ fun RetangulusGroup(
                             .size(retanguloWidth, retanguloHeight)
 //                .background(Color.Green)
                     ) {
-                        ArrowIcon(modifier = Modifier.align(Alignment.CenterVertically))
+                        ArrowIcon(tint = identifierColor, modifier = Modifier.align(Alignment.CenterVertically))
                     }
 
                     Row(
@@ -326,7 +308,6 @@ fun RetangulusGroup(
 //                    .height(62.dp)
 //                    .align(Alignment.End)
                         .onGloballyPositioned { coords ->
-                            //
                             retanguloHeight = (coords.size.height.dp / 6)
                             retanguloWidth = (coords.size.width.dp / 3)
                         },
@@ -352,6 +333,7 @@ fun RetangulusGroup(
 //                .background(Color.Green)
                     ) {
                         ArrowIcon(
+                            tint = identifierColor,
                             modifier = Modifier
                             .rotate(-90f)
                             .align(Alignment.CenterVertically)
@@ -402,12 +384,13 @@ fun RetangulusGroup(
         }
     }
 
+    val m = modifier
+        .background(identifierColor, RoundedCornerShape(border.topStart, border.topEnd, border.bottomStart, border.bottomEnd))
+        .rotate(rotationDegrees)
+
     if (inRow) {
         Row(
-            modifier = modifier
-                .background(identifierColor)
-                .rotate(rotationDegrees),
-//            verticalArrangement = Arrangement.SpaceBetween
+            modifier = m,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             ItsContent(
@@ -420,9 +403,7 @@ fun RetangulusGroup(
         }
     } else {
         Column(
-            modifier = modifier
-                .background(identifierColor)
-                .rotate(rotationDegrees),
+            modifier = m,
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             ItsContent(
@@ -452,19 +433,33 @@ fun PeaoRow(content: @Composable () -> Unit) {
 }
 
 @Composable
-fun StarIcon(modifier: Modifier) {
+fun StarIcon(modifier: Modifier, tint: Color = Color.White) {
     Icon(
-        painterResource(Res.drawable.star),
+        painterResource(Res.drawable.star_fill),
         contentDescription = "star",
-        modifier = modifier
+        modifier = modifier,
+        tint = tint
     )
 }
 
 @Composable
-fun ArrowIcon(modifier: Modifier) {
+fun ArrowIcon(modifier: Modifier, tint: Color = Color.White) {
     Icon(
-        painterResource(Res.drawable.arrow_right_short),
+        painterResource(Res.drawable.forward_fill),
         contentDescription = "arrow",
-        modifier = modifier
+        modifier = modifier,
+        tint = tint
     )
+}
+
+enum class Border(
+    val topStart: Dp,
+    val topEnd: Dp,
+    val bottomStart: Dp,
+    val bottomEnd: Dp
+) {
+    TopStart(40.dp, 0.dp, 0.dp, 0.dp),
+    TopEnd(0.dp, 40.dp, 0.dp, 0.dp),
+    BottomStart(0.dp, 0.dp, 40.dp, 0.dp),
+    BottomEnd(0.dp, 0.dp, 0.dp, 40.dp)
 }
