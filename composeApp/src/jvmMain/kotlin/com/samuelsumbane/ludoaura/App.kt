@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
@@ -17,7 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
@@ -258,8 +256,8 @@ fun RetangulusGroup(
 //                    .align(Alignment.End)
                         .onGloballyPositioned { coords ->
                             //
-                            retanguloHeight = (coords.size.height.dp / 3) - 4.dp
-                            retanguloWidth = (coords.size.width.dp / 6) - 4.dp
+                            retanguloHeight = (coords.size.height.dp / 3) - 2.4.dp
+                            retanguloWidth = (coords.size.width.dp / 6) - 2.4.dp
                         },
                 ) {
                     Row(
@@ -277,29 +275,21 @@ fun RetangulusGroup(
                     // Arrow
                     Row(
                         modifier = Modifier
-                            .padding(start = 3.dp, top = retanguloHeight + 5.dp)
+                            .padding(start = dividerThick, top = retanguloHeight + 5.dp)
                             .size(retanguloWidth, retanguloHeight)
 //                .background(Color.Green)
                     ) {
-                        Icon(
-                            painterResource(Res.drawable.arrow_right_short),
-                            contentDescription = "star",
-                            modifier = Modifier.align(Alignment.CenterVertically)
-                        )
+                        ArrowIcon(modifier = Modifier.align(Alignment.CenterVertically))
                     }
 
                     Row(
                         modifier = Modifier
-                            .padding(start = retanguloWidth + 6.dp, top = 2.dp)
+                            .padding(start = dividerThick + 1.dp, top = dividerThick + 1.dp)
                             .size(retanguloWidth, retanguloHeight)
                             .background(identifierColor),
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        Icon(
-                            painterResource(Res.drawable.star),
-                            contentDescription = "star",
-                            modifier = Modifier.align(Alignment.CenterVertically)
-                        )
+                        StarIcon(modifier = Modifier.align(Alignment.CenterVertically))
                     }
 
                     Row(
@@ -337,8 +327,8 @@ fun RetangulusGroup(
 //                    .align(Alignment.End)
                         .onGloballyPositioned { coords ->
                             //
-                            retanguloHeight = (coords.size.height.dp / 6) + 5.dp
-                            retanguloWidth = (coords.size.width.dp / 3) - 5.dp
+                            retanguloHeight = (coords.size.height.dp / 6)
+                            retanguloWidth = (coords.size.width.dp / 3)
                         },
                 ) {
                     Row(
@@ -361,29 +351,22 @@ fun RetangulusGroup(
                             .align(Alignment.BottomCenter)
 //                .background(Color.Green)
                     ) {
-                        Icon(
-                            painterResource(Res.drawable.arrow_right_short),
-                            contentDescription = "arrow",
+                        ArrowIcon(
                             modifier = Modifier
-                                .rotate(-90f)
-                                .align(Alignment.CenterVertically)
+                            .rotate(-90f)
+                            .align(Alignment.CenterVertically)
                         )
                     }
 
                     Row(
                         modifier = Modifier
 //                            .padding(bottom = retanguloHeight)
-                            .size(retanguloHeight, retanguloWidth)
+                            .size(retanguloWidth, retanguloHeight)
                             .align(Alignment.BottomStart)
                             .background(identifierColor),
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        Icon(
-                            painterResource(Res.drawable.star),
-                            contentDescription = "star",
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                        )
+                        StarIcon(modifier = Modifier.align(Alignment.CenterVertically))
                     }
 
                     Column(
@@ -466,4 +449,22 @@ fun PeaoRow(content: @Composable () -> Unit) {
     ) {
         content()
     }
+}
+
+@Composable
+fun StarIcon(modifier: Modifier) {
+    Icon(
+        painterResource(Res.drawable.star),
+        contentDescription = "star",
+        modifier = modifier
+    )
+}
+
+@Composable
+fun ArrowIcon(modifier: Modifier) {
+    Icon(
+        painterResource(Res.drawable.arrow_right_short),
+        contentDescription = "arrow",
+        modifier = modifier
+    )
 }
