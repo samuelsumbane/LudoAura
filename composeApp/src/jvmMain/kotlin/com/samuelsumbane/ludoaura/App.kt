@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.size
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
@@ -38,6 +41,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.samuelsumbane.ludoaura.presentation.viewmodel.PlayGameViewModel
 import ludoaura.composeapp.generated.resources.Res
 import ludoaura.composeapp.generated.resources.forward_fill
+import ludoaura.composeapp.generated.resources.pawn
 import ludoaura.composeapp.generated.resources.star_fill
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -111,17 +115,27 @@ fun App() {
 fun Peao(
     xOffSet: Dp = 0.dp,
     yOffSet: Dp = 0.dp,
+    tint: Color,
     onClick: () -> Unit
 ) {
-    Text("s")
+//    Text("s")
 
-//    IconButton(
-//        onClick = onClick,
-//        modifier = Modifier.offset(xOffSet,yOffSet)
-//    ) {
-////        Icon(Icons.Default.)
-//        Text("I")
-//    }
+    IconButton(
+        onClick = onClick,
+        modifier = Modifier
+            .offset(xOffSet,yOffSet)
+            .size(24.dp)
+        ,
+        colors = IconButtonDefaults.iconButtonColors(
+//            containerColor = Color.Magenta
+        )
+    ) {
+        Icon(
+            painter = painterResource(Res.drawable.pawn),
+            contentDescription = "Pawn",
+            tint = tint
+       )
+    }
 }
 
 @Composable
@@ -204,19 +218,20 @@ fun RetangulusGroup(
     ) {
         Column(
             modifier = peaoGroupModifier
-                .background(Color.Black.copy(alpha = 0.2f), RoundedCornerShape(12.dp))
+                .background(MaterialTheme.colorScheme.background, RoundedCornerShape(12.dp))
                 .size(80.dp)
             ,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            val  pawnsColor = identifierColor
             PeaoRow {
-                Peao {  }
-                Peao {  }
+                Peao(tint = pawnsColor) {  }
+                Peao(tint = pawnsColor) {  }
             }
             PeaoRow {
-                Peao {  }
-                Peao {  }
+                Peao(tint = pawnsColor) {  }
+                Peao(tint = pawnsColor) {  }
             }
         }
 
