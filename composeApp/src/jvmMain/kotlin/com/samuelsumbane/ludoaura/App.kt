@@ -18,9 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -77,32 +75,69 @@ fun App() {
                     .height(boxHeight)
             ) {
 
-                PeaoPlace()
-//            Column(
-//                modifier = Modifier
-////                    .size(50.dp)
-//                    .background(Color.Green)
-//            ) {
+                val fItemWidth = 0.41f
+                val sItemWidth = 0.59f
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+//                .fillMaxWidth(0.9f)
+                        .padding(10.dp)
+//                .background(Color.LightGray)
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        RetangulusGroup(
+                            identifierColor = Color.Green,
+                            modifier = Modifier
+                                .fillMaxWidth(fItemWidth)
+                                .fillMaxHeight(sItemWidth)
+                                .align(Alignment.TopStart),
+                            border = Border.TopStart
+                        )
 
+                        RetangulusGroup(
+                            identifierColor = Color.Yellow,
+                            rotationDegrees = 180f,
+                            modifier = Modifier
+                                .fillMaxWidth(sItemWidth)
+                                .fillMaxHeight(fItemWidth)
+                                .align(Alignment.TopEnd),
+                            border = Border.TopEnd,
+                            inRow = true
+                        )
 
-//                SpaceAroundRow {
-//                    Peao(){
-//
-//                    }
-//                    Peao(
-//                        playGameUiState.firstButton.xPosition.dp,
-//                        playGameUiState.firstButton.yPosition.dp,
-//                    ) {
-//                        coroutine.launch {
-//                            repeat(29) {
-//                                delay(560)
-//                                playGameViewModel.submit(PeaoButton.firstButton)
-//                                println("runned $it")
-//                            }
-//                        }
-//                    }
-//                }
-//            }
+                        RetangulusGroup(
+                            identifierColor = Color.Red,
+                            modifier = Modifier
+                                .fillMaxWidth(sItemWidth)
+                                .fillMaxHeight(fItemWidth)
+                                .align(Alignment.BottomStart),
+                            border = Border.BottomEnd,
+                            inRow = true
+                        )
+
+                        RetangulusGroup(
+                            identifierColor = Color.Blue,
+                            rotationDegrees = 180f,
+                            modifier = Modifier
+                                .fillMaxWidth(fItemWidth)
+                                .fillMaxHeight(sItemWidth)
+                                .align(Alignment.BottomEnd),
+                            border = Border.BottomStart
+                        )
+
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth(1f - fItemWidth * 2f)
+                                .fillMaxHeight(1f - fItemWidth * 2f)
+                                .background(Color.Magenta)
+                                .align(Alignment.Center)
+                        ) {
+                            println("o width: ${1f - (sItemWidth * 2)}")
+                        }
+                    }
+                }
 
 
             }
@@ -116,85 +151,29 @@ fun Peao(
     xOffSet: Dp = 0.dp,
     yOffSet: Dp = 0.dp,
     tint: Color,
+    rotate: Boolean,
+//    buttonIdentifier: ButtonIdentifier,
     onClick: () -> Unit
 ) {
 //    Text("s")
-
     IconButton(
         onClick = onClick,
         modifier = Modifier
             .offset(xOffSet,yOffSet)
             .size(24.dp)
         ,
-        colors = IconButtonDefaults.iconButtonColors(
-//            containerColor = Color.Magenta
-        )
     ) {
         Icon(
             painter = painterResource(Res.drawable.pawn),
             contentDescription = "Pawn",
-            tint = tint
+            tint = tint,
+            modifier = if (rotate) Modifier.rotate(180f) else Modifier
        )
     }
 }
 
-@Composable
-fun PeaoPlace() {
-    val fItemWidth = 0.41f
-    val sItemWidth = 0.59f
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-//                .fillMaxWidth(0.9f)
-                .padding(10.dp)
-//                .background(Color.LightGray)
-        ) {
-            Box(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                RetangulusGroup(
-                    identifierColor = Color.Green,
-                    modifier = Modifier
-                        .fillMaxWidth(fItemWidth)
-                        .fillMaxHeight(sItemWidth)
-                        .align(Alignment.TopStart),
-                    border = Border.TopStart
-                )
 
-                RetangulusGroup(
-                    identifierColor = Color.Yellow,
-                    rotationDegrees = 180f,
-                    modifier = Modifier
-                        .fillMaxWidth(sItemWidth)
-                        .fillMaxHeight(fItemWidth)
-                        .align(Alignment.TopEnd),
-                    border = Border.TopEnd,
-                    inRow = true
-                )
 
-                RetangulusGroup(
-                    identifierColor = Color.Red,
-                    modifier = Modifier
-                        .fillMaxWidth(sItemWidth)
-                        .fillMaxHeight(fItemWidth)
-                        .align(Alignment.BottomStart),
-                    border = Border.BottomEnd,
-                    inRow = true
-                )
-
-                RetangulusGroup(
-                    identifierColor = Color.Blue,
-                    rotationDegrees = 180f,
-                    modifier = Modifier
-                        .fillMaxWidth(fItemWidth)
-                        .fillMaxHeight(sItemWidth)
-                        .align(Alignment.BottomEnd),
-                    border = Border.BottomStart
-                )
-            }
-        }
-
-}
 
 @Composable
 fun RetangulusGroup(
@@ -224,14 +203,28 @@ fun RetangulusGroup(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            val  pawnsColor = identifierColor
+            val pawnsColor = identifierColor
+            val rotateIcon = rotationDegrees != 0f
+
             PeaoRow {
-                Peao(tint = pawnsColor) {  }
-                Peao(tint = pawnsColor) {  }
+                Peao(
+                    tint = pawnsColor,
+                    rotate = rotateIcon
+                ) {  }
+                Peao(
+                    tint = pawnsColor,
+                    rotate = rotateIcon
+                ) {  }
             }
             PeaoRow {
-                Peao(tint = pawnsColor) {  }
-                Peao(tint = pawnsColor) {  }
+                Peao(
+                    tint = pawnsColor,
+                    rotate = rotateIcon
+                ) {  }
+                Peao(
+                    tint = pawnsColor,
+                    rotate = rotateIcon
+                ) {  }
             }
         }
 

@@ -1,8 +1,8 @@
 package com.samuelsumbane.ludoaura.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.samuelsumbane.ludoaura.presentation.uistate.PeaoButton
 import com.samuelsumbane.ludoaura.presentation.uistate.PlayGameUiState
+import com.samuelsumbane.ludoaura.utils.ButtonIdentifier
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -14,14 +14,13 @@ class PlayGameViewModel : ViewModel() {
 
     private val jupper = 30
 
-    fun submit(button: PeaoButton) {
-        val buttonData = if (button == PeaoButton.firstButton) playGame.value.firstButton else playGame.value.secondButton
+    fun submit(button: ButtonIdentifier) {
+        val buttonData = if (button == ButtonIdentifier.GFirst) playGame.value.firstButton else playGame.value.secondButton
 
         fun moveFButtonToLeft() = changeFButtonPosition(buttonData.xPosition - jupper, buttonData.yPosition)
         fun moveFButtonToRight() = changeFButtonPosition(buttonData.xPosition + jupper, buttonData.yPosition)
         fun moveFButtonDown() = changeFButtonPosition(buttonData.xPosition, buttonData.yPosition + jupper)
         fun moveFButtonUp() = changeFButtonPosition(buttonData.xPosition, buttonData.yPosition - jupper)
-
 
         when {
             buttonData.xPosition == 0 && buttonData.yPosition == 0 -> {
