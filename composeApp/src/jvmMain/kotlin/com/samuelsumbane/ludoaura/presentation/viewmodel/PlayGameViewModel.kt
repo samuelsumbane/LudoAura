@@ -15,7 +15,11 @@ class PlayGameViewModel : ViewModel() {
     private val jupper = 30
 
     fun submit(button: ButtonIdentifier) {
-        val buttonData = if (button == ButtonIdentifier.GFirst) playGame.value.firstButton else playGame.value.secondButton
+//        val buttonData = if (button == ButtonIdentifier.GFirst) playGame.value.firstButton else playGame.value.secondButton
+
+        val buttonData = when(button) {
+            ButtonIdentifier.GFirst -> playGame.value
+        }
 
         fun moveFButtonToLeft() = changeFButtonPosition(buttonData.xPosition - jupper, buttonData.yPosition)
         fun moveFButtonToRight() = changeFButtonPosition(buttonData.xPosition + jupper, buttonData.yPosition)

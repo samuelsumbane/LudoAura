@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.samuelsumbane.ludoaura.presentation.viewmodel.PlayGameViewModel
+import com.samuelsumbane.ludoaura.utils.ButtonIdentifier
 import ludoaura.composeapp.generated.resources.Res
 import ludoaura.composeapp.generated.resources.forward_fill
 import ludoaura.composeapp.generated.resources.pawn
@@ -88,6 +89,13 @@ fun App() {
                         modifier = Modifier.fillMaxSize()
                     ) {
                         RetangulusGroup(
+                            playGameViewModel,
+                            pawnButton = listOf(
+                                ButtonIdentifier.GFirst,
+                                ButtonIdentifier.GSecond,
+                                ButtonIdentifier.GThird,
+                                ButtonIdentifier.GFourth,
+                            ),
                             identifierColor = Color.Green,
                             modifier = Modifier
                                 .fillMaxWidth(fItemWidth)
@@ -97,6 +105,13 @@ fun App() {
                         )
 
                         RetangulusGroup(
+                            playGameViewModel,
+                            pawnButton = listOf(
+                                ButtonIdentifier.YFirst,
+                                ButtonIdentifier.YSecond,
+                                ButtonIdentifier.YThird,
+                                ButtonIdentifier.YFourth,
+                            ),
                             identifierColor = Color.Yellow,
                             rotationDegrees = 180f,
                             modifier = Modifier
@@ -108,6 +123,13 @@ fun App() {
                         )
 
                         RetangulusGroup(
+                            playGameViewModel,
+                            pawnButton = listOf(
+                                ButtonIdentifier.RFirst,
+                                ButtonIdentifier.RSecond,
+                                ButtonIdentifier.RThird,
+                                ButtonIdentifier.RFourth,
+                            ),
                             identifierColor = Color.Red,
                             modifier = Modifier
                                 .fillMaxWidth(sItemWidth)
@@ -118,6 +140,13 @@ fun App() {
                         )
 
                         RetangulusGroup(
+                            playGameViewModel,
+                            pawnButton = listOf(
+                                ButtonIdentifier.BFirst,
+                                ButtonIdentifier.BSecond,
+                                ButtonIdentifier.BThird,
+                                ButtonIdentifier.BFourth,
+                            ),
                             identifierColor = Color.Blue,
                             rotationDegrees = 180f,
                             modifier = Modifier
@@ -177,6 +206,8 @@ fun Peao(
 
 @Composable
 fun RetangulusGroup(
+    playGameViewModel: PlayGameViewModel,
+    pawnButton: List<ButtonIdentifier>,
     identifierColor: Color,
     modifier: Modifier = Modifier,
     rotationDegrees: Float = 0f,
@@ -210,21 +241,23 @@ fun RetangulusGroup(
                 Peao(
                     tint = pawnsColor,
                     rotate = rotateIcon
-                ) {  }
+                ) { playGameViewModel.submit(pawnButton[0]) }
+
                 Peao(
                     tint = pawnsColor,
                     rotate = rotateIcon
-                ) {  }
+                ) { playGameViewModel.submit(pawnButton[1]) }
             }
             PeaoRow {
                 Peao(
                     tint = pawnsColor,
                     rotate = rotateIcon
-                ) {  }
+                ) { playGameViewModel.submit(pawnButton[2]) }
+
                 Peao(
                     tint = pawnsColor,
                     rotate = rotateIcon
-                ) {  }
+                ) { playGameViewModel.submit(pawnButton[3]) }
             }
         }
 
