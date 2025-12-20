@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.samuelsumbane.ludoaura.presentation.uistate.ButtonData
+import com.samuelsumbane.ludoaura.presentation.uistate.PlayGameUiState
 import com.samuelsumbane.ludoaura.presentation.viewmodel.PlayGameViewModel
 import com.samuelsumbane.ludoaura.utils.ButtonIdentifier
 import ludoaura.composeapp.generated.resources.Res
@@ -88,73 +90,95 @@ fun App() {
                     Box(
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        RetangulusGroup(
-                            playGameViewModel,
-                            pawnButton = listOf(
-                                ButtonIdentifier.GFirst,
-                                ButtonIdentifier.GSecond,
-                                ButtonIdentifier.GThird,
-                                ButtonIdentifier.GFourth,
-                            ),
-                            identifierColor = Color.Green,
-                            modifier = Modifier
-                                .fillMaxWidth(fItemWidth)
-                                .fillMaxHeight(sItemWidth)
-                                .align(Alignment.TopStart),
-                            border = Border.TopStart
-                        )
+                        with(playGameViewModel) {
+                            RetangulusGroup(
+                                pawnButton = listOf(
+                                    ButtonIdentifier.GFirst,
+                                    ButtonIdentifier.GSecond,
+                                    ButtonIdentifier.GThird,
+                                    ButtonIdentifier.GFourth,
+                                ),
+                                pawnButtonsData = listOf(
+                                    playGameUiState.gFirst,
+                                    playGameUiState.gSecond,
+                                    playGameUiState.gThird,
+                                    playGameUiState.gFourth,
+                                ),
+                                identifierColor = Color.Green,
+                                modifier = Modifier
+                                    .fillMaxWidth(fItemWidth)
+                                    .fillMaxHeight(sItemWidth)
+                                    .align(Alignment.TopStart),
+                                border = Border.TopStart
+                            )
 
-                        RetangulusGroup(
-                            playGameViewModel,
-                            pawnButton = listOf(
-                                ButtonIdentifier.YFirst,
-                                ButtonIdentifier.YSecond,
-                                ButtonIdentifier.YThird,
-                                ButtonIdentifier.YFourth,
-                            ),
-                            identifierColor = Color.Yellow,
-                            rotationDegrees = 180f,
-                            modifier = Modifier
-                                .fillMaxWidth(sItemWidth)
-                                .fillMaxHeight(fItemWidth)
-                                .align(Alignment.TopEnd),
-                            border = Border.TopEnd,
-                            inRow = true
-                        )
+                            RetangulusGroup(
+                                pawnButton = listOf(
+                                    ButtonIdentifier.YFirst,
+                                    ButtonIdentifier.YSecond,
+                                    ButtonIdentifier.YThird,
+                                    ButtonIdentifier.YFourth,
+                                ),
+                                pawnButtonsData = listOf(
+                                    playGameUiState.yFirst,
+                                    playGameUiState.ySecond,
+                                    playGameUiState.yThird,
+                                    playGameUiState.yFourth,
+                                ),
+                                identifierColor = Color.Yellow,
+                                rotationDegrees = 180f,
+                                modifier = Modifier
+                                    .fillMaxWidth(sItemWidth)
+                                    .fillMaxHeight(fItemWidth)
+                                    .align(Alignment.TopEnd),
+                                border = Border.TopEnd,
+                                inRow = true
+                            )
 
-                        RetangulusGroup(
-                            playGameViewModel,
-                            pawnButton = listOf(
-                                ButtonIdentifier.RFirst,
-                                ButtonIdentifier.RSecond,
-                                ButtonIdentifier.RThird,
-                                ButtonIdentifier.RFourth,
-                            ),
-                            identifierColor = Color.Red,
-                            modifier = Modifier
-                                .fillMaxWidth(sItemWidth)
-                                .fillMaxHeight(fItemWidth)
-                                .align(Alignment.BottomStart),
-                            border = Border.BottomEnd,
-                            inRow = true
-                        )
+                            RetangulusGroup(
+                                pawnButton = listOf(
+                                    ButtonIdentifier.RFirst,
+                                    ButtonIdentifier.RSecond,
+                                    ButtonIdentifier.RThird,
+                                    ButtonIdentifier.RFourth,
+                                ),
+                                pawnButtonsData = listOf(
+                                    playGameUiState.rFirst,
+                                    playGameUiState.rSecond,
+                                    playGameUiState.rThird,
+                                    playGameUiState.rFourth,
+                                ),
+                                identifierColor = Color.Red,
+                                modifier = Modifier
+                                    .fillMaxWidth(sItemWidth)
+                                    .fillMaxHeight(fItemWidth)
+                                    .align(Alignment.BottomStart),
+                                border = Border.BottomEnd,
+                                inRow = true
+                            )
 
-                        RetangulusGroup(
-                            playGameViewModel,
-                            pawnButton = listOf(
-                                ButtonIdentifier.BFirst,
-                                ButtonIdentifier.BSecond,
-                                ButtonIdentifier.BThird,
-                                ButtonIdentifier.BFourth,
-                            ),
-                            identifierColor = Color.Blue,
-                            rotationDegrees = 180f,
-                            modifier = Modifier
-                                .fillMaxWidth(fItemWidth)
-                                .fillMaxHeight(sItemWidth)
-                                .align(Alignment.BottomEnd),
-                            border = Border.BottomStart
-                        )
+                            RetangulusGroup(
+                                pawnButton = listOf(
+                                    ButtonIdentifier.BFirst,
+                                    ButtonIdentifier.BSecond,
+                                    ButtonIdentifier.BThird,
+                                    ButtonIdentifier.BFourth,
+                                ),
+                                pawnButtonsData = listOf(
+                                    playGameUiState.bFirst,
+                                    playGameUiState.bSecond,
+                                    playGameUiState.bThird,
+                                    playGameUiState.bFourth,
+                                ),
+                                identifierColor = Color.Blue,
+                                rotationDegrees = 180f,
+                                modifier = Modifier
+                                    .fillMaxWidth(fItemWidth)
+                                    .fillMaxHeight(sItemWidth)
+                                    .align(Alignment.BottomEnd),
+                                border = Border.BottomStart
+                            )
+                        }
 
                         Column(
                             modifier = Modifier
@@ -203,11 +227,12 @@ fun Peao(
 
 
 
-
+context(playGameViewModel: PlayGameViewModel)
 @Composable
 fun RetangulusGroup(
-    playGameViewModel: PlayGameViewModel,
+//    playGameViewModel: PlayGameViewModel,
     pawnButton: List<ButtonIdentifier>,
+    pawnButtonsData: List<ButtonData>,
     identifierColor: Color,
     modifier: Modifier = Modifier,
     rotationDegrees: Float = 0f,
@@ -239,22 +264,30 @@ fun RetangulusGroup(
 
             PeaoRow {
                 Peao(
+                    xOffSet = pawnButtonsData[0].xPosition.dp,
+                    yOffSet = pawnButtonsData[0].yPosition.dp,
                     tint = pawnsColor,
                     rotate = rotateIcon
                 ) { playGameViewModel.submit(pawnButton[0]) }
 
                 Peao(
+                    xOffSet = pawnButtonsData[1].xPosition.dp,
+                    yOffSet = pawnButtonsData[1].yPosition.dp,
                     tint = pawnsColor,
                     rotate = rotateIcon
                 ) { playGameViewModel.submit(pawnButton[1]) }
             }
             PeaoRow {
                 Peao(
+                    xOffSet = pawnButtonsData[2].xPosition.dp,
+                    yOffSet = pawnButtonsData[2].yPosition.dp,
                     tint = pawnsColor,
                     rotate = rotateIcon
                 ) { playGameViewModel.submit(pawnButton[2]) }
 
                 Peao(
+                    xOffSet = pawnButtonsData[3].xPosition.dp,
+                    yOffSet = pawnButtonsData[3].yPosition.dp,
                     tint = pawnsColor,
                     rotate = rotateIcon
                 ) { playGameViewModel.submit(pawnButton[3]) }
