@@ -78,8 +78,8 @@ fun App() {
                     .height(boxHeight)
             ) {
 
-                val fItemWidth = 0.41f
-                val sItemWidth = 0.59f
+                val fItemWidth = 0.42f
+                val sItemWidth = 0.58f
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -180,15 +180,14 @@ fun App() {
                             )
                         }
 
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth(1f - fItemWidth * 2f)
-                                .fillMaxHeight(1f - fItemWidth * 2f)
-                                .background(Color.Magenta)
-                                .align(Alignment.Center)
-                        ) {
-                            println("o width: ${1f - (sItemWidth * 2)}")
-                        }
+//                        Column(
+//                            modifier = Modifier
+//                                .fillMaxWidth(1f - fItemWidth * 2f)
+//                                .fillMaxHeight(1f - fItemWidth * 2f)
+//                                .background(Color.Magenta)
+//                                .align(Alignment.Center)
+//                        ) {
+//                        }
                     }
                 }
 
@@ -205,16 +204,13 @@ fun Peao(
     yOffSet: Dp = 0.dp,
     tint: Color,
     rotate: Boolean,
-//    buttonIdentifier: ButtonIdentifier,
     onClick: () -> Unit
 ) {
-//    Text("s")
     IconButton(
         onClick = onClick,
         modifier = Modifier
             .offset(xOffSet,yOffSet)
-            .size(24.dp)
-        ,
+            .size(24.dp),
     ) {
         Icon(
             painter = painterResource(Res.drawable.pawn),
@@ -254,8 +250,7 @@ fun RetangulusGroup(
         Column(
             modifier = peaoGroupModifier
                 .background(MaterialTheme.colorScheme.background, RoundedCornerShape(12.dp))
-                .size(80.dp)
-            ,
+                .size(80.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -469,7 +464,7 @@ fun RetangulusGroup(
         ) {
             ItsContent(
                 boxModifier = Modifier
-                    .width(60.dp),
+                    .width(56.dp),
                 peaoGroupModifier = Modifier
                     .padding(start = 25.dp)
                     .align(Alignment.CenterVertically)
@@ -482,7 +477,7 @@ fun RetangulusGroup(
         ) {
             ItsContent(
                 boxModifier = Modifier
-                    .height(55.dp),
+                    .height(56.dp),
                 peaoGroupModifier = Modifier
                     .padding(top = 30.dp)
                     .align(Alignment.CenterHorizontally)

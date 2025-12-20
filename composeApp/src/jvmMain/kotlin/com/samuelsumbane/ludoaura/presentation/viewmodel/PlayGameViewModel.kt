@@ -1,6 +1,5 @@
 package com.samuelsumbane.ludoaura.presentation.viewmodel
 
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import com.samuelsumbane.ludoaura.presentation.uistate.PlayGameUiState
 import com.samuelsumbane.ludoaura.utils.ButtonIdentifier
@@ -13,7 +12,7 @@ class PlayGameViewModel : ViewModel() {
     val _playGame = MutableStateFlow(PlayGameUiState())
     val playGame = _playGame.asStateFlow()
 
-    private val jupper = 30
+    private val jupper = 10
 
     fun submit(button: ButtonIdentifier) {
         val buttonData = when(button) {
@@ -35,10 +34,10 @@ class PlayGameViewModel : ViewModel() {
             ButtonIdentifier.BFourth -> playGame.value.bFourth
         }
 
-        fun moveButtonToLeft() = changeFButtonPosition(button, buttonData.xPosition - jupper, buttonData.yPosition)
-        fun moveButtonToRight() = changeFButtonPosition(button, buttonData.xPosition + jupper, buttonData.yPosition)
-        fun moveButtonDown() = changeFButtonPosition(button, buttonData.xPosition, buttonData.yPosition + jupper)
-        fun moveButtonUp() = changeFButtonPosition(button, buttonData.xPosition, buttonData.yPosition - jupper)
+        fun moveButtonToLeft() = changeButtonPosition(button, buttonData.xPosition - jupper, buttonData.yPosition)
+        fun moveButtonToRight() = changeButtonPosition(button, buttonData.xPosition + jupper, buttonData.yPosition)
+        fun moveButtonDown() = changeButtonPosition(button, buttonData.xPosition, buttonData.yPosition + jupper)
+        fun moveButtonUp() = changeButtonPosition(button, buttonData.xPosition, buttonData.yPosition - jupper)
 
         when {
             buttonData.xPosition == 0 && buttonData.yPosition == 0 -> {
@@ -91,7 +90,7 @@ class PlayGameViewModel : ViewModel() {
     }
 
 
-    fun changeFButtonPosition(button: ButtonIdentifier, aditionalXPosition: Int, aditionalYPosition: Int) {
+    fun changeButtonPosition(button: ButtonIdentifier, aditionalXPosition: Int, aditionalYPosition: Int) {
         _playGame.update {
             when (button) {
                 ButtonIdentifier.GFirst -> it.copy(gFirst = it.gFirst.copy(xPosition = aditionalXPosition, yPosition = aditionalYPosition))
